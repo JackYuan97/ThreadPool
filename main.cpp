@@ -1,6 +1,7 @@
 #include"ThreadPool.h"
 
 
+
 int random()
 {
     std::random_device rd;
@@ -31,14 +32,9 @@ int main() {
 
     // 添加任务到线程池
     for (int i = 0; i < num_tasks; ++i) {
-        pool.AddTask(std::bind(DoWork, i));
+        int hashIndex = i % num_threads;
+        pool.AddTask(std::bind(DoWork, i), hashIndex);
     }
-
-    // 等待所有任务完成
-    //pool.AddTask([]() {
-    //    std::cout << "All tasks are completed." << std::endl;
-    //    });
-
 
 
     return 0;
